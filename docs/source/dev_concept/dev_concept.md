@@ -41,14 +41,14 @@ bash docker/scripts/docker_into.sh sdk # 进入智路OS集成开发环境镜像
 
 镜像内主要包含第三方库、智路OS开发SDK、包管理工具
 * 第三方库：安装在/usr/local目录，包含智路OS依赖的第三方组件
-* 智路OS开发SDK：安装在/airos/sdk/airos目录，包含核心工具库、组件接口、标准数据依赖库
+* 智路OS开发SDK：安装在/opt/airos/sdk/airos目录，包含核心工具库、组件接口、标准数据依赖库
 * 包管理工具：airospkg，基于SDK的包管理工具，提供模板创建、编译、发布、安装、运行、删除功能
 ### 3 SDK
 智路OS提供了X86和ARM的相关SDK和第三方依赖
 
 **智路SDK** 
 
-智路OS开发SDK包含智路OS标准头文件和依赖库，安装在/airos/sdk/airos目录，开发者可以使用Bazel或者CMake进行依赖并构建自定义组件
+智路OS开发SDK包含智路OS标准头文件和依赖库，安装在/opt/airos/sdk/airos目录，开发者可以使用Bazel或者CMake进行依赖并构建自定义组件
 
 SDK结构如下所示，相关使用方式在后续小节组件开发部分详细介绍。
 
@@ -66,31 +66,33 @@ SDK结构如下所示，相关使用方式在后续小节组件开发部分详�
 
 智路OS还提供了第三方库的依赖，开发时需要优先依赖这些库，以保证不会出现版本冲突
 
-| 库名           | 库路径                        | 库功能描述                                                 |
-|--------------|-----------------------------|-----------------------------------------------------------|
-| yaml-cpp     | /usr/local/lib | 提供C++中的YAML文件解析和生成功能，用于处理YAML格式的数据。  |
-| tensorrt     |                             | NVIDIA推出的深度学习推理引擎，用于优化和加速深度学习模型的推理。|
-| pugixml      |                             | 用于解析和生成XML文档的C++库，提供简单的API以处理XML数据。     |
-| paho-mqtt3as |                             | Eclipse Paho项目的MQTT客户端库，用于实现MQTT协议的消息发布和订阅。|
-| paho-mqtt3cs |                             | Eclipse Paho项目的MQTT客户端库，用于实现MQTT协议的消息发布和订阅。|
-| protobuf     |                             | Google开发的一种轻量级、高效、可扩展的数据序列化格式，用于结构化数据的序列化和反序列化。|
-| jsoncpp      |                             | 用于处理JSON数据的C++库，提供了解析和生成JSON的功能。         |
-| glog         |                             | 由Google开发的C++日志库，提供了灵活的日志记录功能，支持多线程环境。 |
-| glfw         |                             | 用于创建窗口和处理用户输入的多平台游戏开发库。                 |
-| glew         |                             | OpenGL扩展包，用于管理OpenGL扩展，简化OpenGL程序的初始化过程。|
-| gflags       |                             | Google开发的命令行参数解析库，用于处理命令行参数的解析和管理。   |
-| ffmpeg       |                             | 用于处理多媒体数据的开源软件，支持音频和视频的录制、转码、播放等操作。|
-| fastrtps     |                             | 实时发布-订阅中间件（Real-Time Publish-Subscribe），用于实现分布式系统中的实时通信。|
-| atlas        |                             | Huawei开发的深度学习推理框架，用于在各种硬件平台上进行高效的深度学习推理。|
-| boost        |                             | 一组用于增强C++语言功能的高质量库集合，包括智能指针、线程、文件系统等模块。|
-| opencv       |                             | 开源计算机视觉库，提供了丰富的图像处理和计算机视觉算法，用于图像处理、目标检测、人脸识别等应用。|
-| eigen        |                             | C++模板库，提供线性代数和矩阵运算的功能，用于科学计算和机器学习。     |
-| opengl       |                             | 开放图形库，用于渲染2D和3D图形。                               |
-| cuda         | /usr/local/cuda/lib64       | NVIDIA推出的并行计算平台和编程模型，用于在NVIDIA GPU上进行通用目的的并行计算。|
-| cyber        | /opt/local/cyber-rt         | Apollo（百度自动驾驶平台）中使用的实时计算框架，支持分布式实时数据处理和通信，用于自动驾驶系统的开发。|
-| paddle       | /opt/local/paddle            | 百度开发的深度学习框架，支持深度学习模型的训练和推理，包括计算机视觉、自然语言处理等领域。|
-| hiksdk       | /opt/local/Hikvision         | 海康威视IP摄像机SDK                                           |
-| asn_wrapper   | /opt/local/asn-wrapper       | 百度智路OS开源V2X相关ASN.1标准文件编解码库                    |
+`注：u20-latest代表使用apt在ubuntu20.04上获取的最新稳定版本`
+
+| 库名          | 版本          | 库路径                        | 库功能描述                                                 |
+|--------------|--------------|-----------------------------|-----------------------------------------------------------|
+| yaml-cpp     | u20-latest | /usr/local/lib | 提供C++中的YAML文件解析和生成功能，用于处理YAML格式的数据。  |
+| tensorrt     | 8.2.2-1 |                             | NVIDIA推出的深度学习推理引擎，用于优化和加速深度学习模型的推理。|
+| pugixml      | u20-latest |                             | 用于解析和生成XML文档的C++库，提供简单的API以处理XML数据。     |
+| paho-mqtt3as | 1.3.13 |                             | Eclipse Paho项目的MQTT客户端库，用于实现MQTT协议的消息发布和订阅。|
+| paho-mqtt3cs | 1.3.13 |                             | Eclipse Paho项目的MQTT客户端库，用于实现MQTT协议的消息发布和订阅。|
+| protobuf     | 3.14.0 |                             | Google开发的一种轻量级、高效、可扩展的数据序列化格式，用于结构化数据的序列化和反序列化。|
+| jsoncpp      | u20-latest |                             | 用于处理JSON数据的C++库，提供了解析和生成JSON的功能。         |
+| glog         | 0.4.0 |                             | 由Google开发的C++日志库，提供了灵活的日志记录功能，支持多线程环境。 |
+| glfw         | u20-latest |                             | 用于创建窗口和处理用户输入的多平台游戏开发库。                 |
+| glew         | u20-latest |                             | OpenGL扩展包，用于管理OpenGL扩展，简化OpenGL程序的初始化过程。|
+| gflags       | 2.2.2 |                             | Google开发的命令行参数解析库，用于处理命令行参数的解析和管理。   |
+| ffmpeg       | x86:4.4.4<br>arm:4.1.4 |                             | 用于处理多媒体数据的开源软件，支持音频和视频的录制、转码、播放等操作。|
+| fastrtps     | 1.5.0-1 |                             | 实时发布-订阅中间件（Real-Time Publish-Subscribe），用于实现分布式系统中的实时通信。|
+| atlas        | u20-latest |                             | Huawei开发的深度学习推理框架，用于在各种硬件平台上进行高效的深度学习推理。|
+| boost        | u20-latest |                             | 一组用于增强C++语言功能的高质量库集合，包括智能指针、线程、文件系统等模块。|
+| opencv       | 3.4.20 |                             | 开源计算机视觉库，提供了丰富的图像处理和计算机视觉算法，用于图像处理、目标检测、人脸识别等应用。|
+| eigen        | u20-latest |                             | C++模板库，提供线性代数和矩阵运算的功能，用于科学计算和机器学习。     |
+| cudnn       | x86:8.2.2.26-1<br>arm:8.4.1.50-1 |                             | NVIDIA专为加速深度学习框架中的神经网络运算而设计的高性能库。                               |
+| cuda         | 11.4 | /usr/local/cuda/lib64       | NVIDIA推出的并行计算平台和编程模型，用于在NVIDIA GPU上进行通用目的的并行计算。|
+| cyberRT        | r8.0.0 | /opt/local/cyber-rt         | Apollo（百度自动驾驶平台）中使用的实时计算框架，支持分布式实时数据处理和通信，用于自动驾驶系统的开发。|
+| paddle       | 2.3.2 | /opt/local/paddle            | 百度开发的深度学习框架，支持深度学习模型的训练和推理，包括计算机视觉、自然语言处理等领域。|
+| hiksdk       | stable | /opt/local/Hikvision         | 海康威视IP摄像机SDK                                           |
+| asn_wrapper   | 1.0.0 | /opt/local/asn-wrapper       | 百度智路OS开源V2X相关ASN.1标准文件编解码库                    |
 
 除了以上第三方库外，SDK镜像内部还安装了一些基本依赖库，一般在/usr/lib/x86_64-linux-gnu/目录下，编译时会默认添加相应路径
 
